@@ -1,0 +1,33 @@
+.navbar {
+  position: fixed;
+  width: 100%;
+  padding: 20px 20px;
+  z-index: 1000;
+}
+
+.marca {
+  margin-top: 80px;
+}
+
+.modelo {
+  font-family: "Goldman", sans-serif;
+  font-size: 90px;
+}
+
+.descripcion {
+  font-family: "Mulish", sans-serif;
+}
+
+.precio {
+  font-size: 75px;
+  margin-top: 60px;
+}
+
+.boton-comprar {
+  border-color: white;
+  border-radius: 45px;
+  font-size: large;
+  font-family: "Mulish", sans-serif;
+  font-weight: 700;
+  padding: 15px;
+}

@@ -1,0 +1,29 @@
+.navbar {
+  position: fixed;
+  width: 100%;
+  padding: 20px 20px;
+  z-index: 1000;
+}
+
+.custom-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.custom-card img {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+  border-radius: 1rem;
+}
+
+#btnMostrarPopup {
+  border-radius: 30px;
+  background-color: rgba(240, 84, 41);
+  color: white;
+}
+
+#modalInicioSesion .modal-dialog {
+  border-radius: 35px;
+}
