@@ -10,7 +10,7 @@
       },
       {
         "src": "/index.php",
-        "use": "@vercel/php",
+        "use": "@now/php",
         "config": {
           "maxLambdaSize": "1024mb"
         }
