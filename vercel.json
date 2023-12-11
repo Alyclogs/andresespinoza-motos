@@ -14,16 +14,12 @@
         "config": {
           "maxLambdaSize": "1024mb"
         },
-        "env": {
-          "PHP_VERSION": "8.0"
-        },
         "functions": {
           "api/**/*.php": {
             "includeFiles": ["composer.json", "composer.lock"],
             "runtime": "vercel@1.0",
             "environment": {
-              "VERCEL": "1",
-              "NODE_VERSION": "16"
+              "PHP_VERSION": "8.0"
             },
             "cleanUrls": true,
             "forceCleanUrls": true,
