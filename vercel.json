@@ -13,18 +13,6 @@
         "use": "@vercel/php",
         "config": {
           "maxLambdaSize": "1024mb"
-        },
-        "functions": {
-          "api/**/*.php": {
-            "includeFiles": ["composer.json", "composer.lock"],
-            "runtime": "vercel@1.0",
-            "environment": {
-              "PHP_VERSION": "8.0"
-            },
-            "cleanUrls": true,
-            "forceCleanUrls": true,
-            "memory": 1024
-          }
         }
       }
     ],
