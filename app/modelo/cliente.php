@@ -7,6 +7,8 @@ class Cliente
     private $user_id;
     private $nombre;
     private $apellidos;
+    private $tipo_doc;
+    private $num_doc;
     private $correo;
     private $telefono;
     private $departamento;
@@ -51,6 +53,26 @@ class Cliente
     public function setApellidos($apellidos)
     {
         $this->apellidos = $apellidos;
+    }
+
+    public function getTipo_doc()
+    {
+        return $this->tipo_doc;
+    }
+
+    public function setTipo_doc($tipo_doc)
+    {
+        $this->tipo_doc = $tipo_doc;
+    }
+
+    public function getNum_doc()
+    {
+        return $this->num_doc;
+    }
+
+    public function setNum_doc($num_doc)
+    {
+        $this->num_doc = $num_doc;
     }
 
     public function getCorreo()

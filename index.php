@@ -1,4 +1,5 @@
 <?php
+require './vendor/autoload.php';
 include_once '../app/modelo/dao/usuarioDAO.php';
 
 if (isset($_COOKIE['recuerdame_token'])) {

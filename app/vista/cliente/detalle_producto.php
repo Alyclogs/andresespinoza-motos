@@ -85,15 +85,15 @@ $moto = $dao->obtenerProductoPorId($id);
         <div class="container-fluid h-100 text-white">
             <div class="row h-100">
                 <div class="col-md-5 d-flex justify-content-center align-items-center">
-                    <img src="data:image/jpeg;base64, <?php echo base64_encode($moto["imagen"]) ?>" alt="<?php echo $moto["modelo"] ?>">
+                    <img src="data:image/jpeg;base64, <?php echo base64_encode($moto->getImagen()) ?>" alt="<?php echo $moto->getModelo() ?>">
                 </div>
                 <div class="col-md-6 mt-4">
-                    <h4 class="marca"><?php echo $moto["marca"] ?></h4>
-                    <h1 class="modelo"><?php echo strtoupper($moto["modelo"]) ?></h1>
+                    <h4 class="marca"><?php echo $moto->getMarca() ?></h4>
+                    <h1 class="modelo"><?php echo strtoupper($moto->getModelo()) ?></h1>
                     <p class="mt-4 descripcion">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nostrum odio neque molestias quidem iusto repellendus optio animi ea expedita suscipit itaque voluptates aliquam, officiis, similique dolore dicta fuga cumque eligendi.</p>
                     <div class="text-end">
-                        <h1 class="precio">S/. <?php echo $moto["precio"] ?></h1>
-                        <a href="./form_pedido.php?id_producto=<?php echo $moto["id"] ?>"><button class="btn text-white boton-comprar" style="margin-top: 30px;">ADQUIRIR MOTO</button></a>
+                        <h1 class="precio">S/. <?php echo $moto->getPrecio() ?></h1>
+                        <a href="./form_pedido.php?id_producto=<?php echo $moto->getId() ?>"><button class="btn text-white boton-comprar" style="margin-top: 30px;">ADQUIRIR MOTO</button></a>
                         <a class="text-white" href="https://wa.me/51111111111">
                             <h5 class="mt-4"><i class="bi bi-whatsapp me-2"></i>Contáctanos vía WhatsApp</h5>
                         </a>
@@ -116,7 +116,7 @@ $moto = $dao->obtenerProductoPorId($id);
                 <tbody>
                     <tr>
                         <td>Modelo</td>
-                        <td><?php echo $moto['modelo'] ?></td>
+                        <td><?php echo $moto->getModelo() ?></td>
                     </tr>
                     <tr>
                         <td>Año</td>
@@ -191,13 +191,7 @@ $moto = $dao->obtenerProductoPorId($id);
     </footer>
 
     <script src=" https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <script>
-        $(document).ready(function() {
-            $("#btnMostrarPopup").click(function() {
-                $("#modalInicioSesion").modal('show');
-            });
-        });
-    </script>
+    <script src="../../../public/assets/js/utils.js"></script>
 </body>
 
 </html>

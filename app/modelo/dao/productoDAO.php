@@ -37,25 +37,47 @@ class ProductoDAO
         $sql = 'INSERT INTO productos
         VALUES (:id, :marca, :modelo, :precio, :imagen, :tipo)';
 
-        return $this->dao->ejecutarActualizacion(
-            $sql,
-            array(
-                ':id' => $producto->getId(),
-                ':marca' => $producto->getMarca(),
-                ':modelo' => $producto->getModelo(),
-                ':precio' => $producto->getPrecio(),
-                ':imagen' => $producto->getImagen()
-            )
-        );
+        try {
+            $this->dao->ejecutarActualizacion(
+                $sql,
+                array(
+                    ':id' => $producto->getId(),
+                    ':marca' => $producto->getMarca(),
+                    ':modelo' => $producto->getModelo(),
+                    ':precio' => $producto->getPrecio(),
+                    ':imagen' => $producto->getImagen()
+                )
+            );
+            return true;
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return false;
+        }
     }
 
     function obtenerProductoPorId($producto_id)
     {
         $this->dao = new DataSource();
         $sql = "SELECT * from productos WHERE id = :id";
-        $resultado = $this->dao->ejecutarConsulta($sql, array(
-            ':id' => $producto_id
-        ));
-        if (count($resultado) > 0) return $resultado[0];
+
+        try {
+            $resultado = $this->dao->ejecutarConsulta($sql, array(
+                ':id' => $producto_id
+            ));
+
+            $producto = new Producto();
+            if (count($resultado) > 0) {
+                $producto->setId($resultado[0]['id']);
+                $producto->setMarca($resultado[0]['marca']);
+                $producto->setModelo($resultado[0]['modelo']);
+                $producto->setPrecio($resultado[0]['precio']);
+                $producto->setImagen($resultado[0]['imagen']);
+                $producto->setTipo($resultado[0]['tipo']);
+            }
+            return $producto;
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return null;
+        }
     }
 }

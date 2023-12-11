@@ -9,6 +9,7 @@ session_start();
 $id = $_GET['id_producto'];
 
 $dao = new ProductoDAO();
+$udao = new UsuarioDAO();
 $moto = $dao->obtenerProductoPorId($id);
 
 if (!isset($_SESSION['sesion'])) {
@@ -101,14 +102,14 @@ if (!isset($_SESSION['sesion'])) {
                 <div class="card custom-card" style="border-radius: 1rem;">
                     <div class="card-body align-items-center">
                         <h5 class="card-title">Descripción del producto</h5>
-                        <img src="data:image/jpeg;base64, <?php echo base64_encode($moto["imagen"]) ?>" alt="<?php echo $moto["modelo"] ?>">
+                        <img src="data:image/jpeg;base64, <?php echo base64_encode($moto->getImagen()) ?>" alt="<?php echo $moto->getModelo() ?>">
                         <div class="row">
                             <div class="col">
-                                <h6 class="card-text mt-4"><?php echo $moto["marca"] ?></h6>
-                                <h5 class="card-text"><?php echo $moto["modelo"] ?></h5>
+                                <h6 class="card-text mt-4"><?php echo $moto->getMarca() ?></h6>
+                                <h5 class="card-text"><?php echo $moto->getModelo() ?></h5>
                             </div>
                             <div class="col mt-auto text-end">
-                                <h5 class="card-text">S/. <?php echo $moto["precio"] ?></h5>
+                                <h5 class="card-text">S/. <?php echo $moto->getPrecio() ?></h5>
                             </div>
                         </div>
                     </div>
@@ -117,19 +118,25 @@ if (!isset($_SESSION['sesion'])) {
             <div class="col-md-8">
                 <form action="../../controlador/cliente/confirmacion_pedido.php" method="post">
                     <h5>Ingresa tus datos:</h5>
-                    <input type="hidden" name="nomProducto" value="<?php echo $moto['marca'] . ' ' . $moto['modelo'] ?>">
-                    <input type="hidden" name="producto_id" value="<?php echo $moto['id'] ?>">
+                    <?php
+                    $cliente = $udao->obtenerClientePorIdUsuario($sesion->usuario->getId());
+                    $existe = false;
+
+                    if ($cliente != null) $existe = true;
+                    ?>
+                    <input type="hidden" name="nomProducto" value="<?php echo $moto->getMarca() . ' ' . $moto->getModelo() ?>">
+                    <input type="hidden" name="producto_id" value="<?php echo $moto->getId() ?>">
                     <div class="row">
                         <div class="col">
                             <div class="form-group mt-3">
                                 <label for="nombre_cliente" class="form-label">Nombres</label>
-                                <input type="text" class="form-control" name="nombre_cliente" id="nombre_cliente" required>
+                                <input type="text" class="form-control" name="nombre_cliente" id="nombre_cliente" value="<?php echo $cliente->getNombre() | '' ?>" required>
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-group mt-3">
                                 <label for="apellidos" class="form-label">Apellidos</label>
-                                <input type="text" class="form-control" name="apellidos" id="apellidos" required>
+                                <input type="text" class="form-control" name="apellidos" id="apellidos" value="<?php echo $cliente->getApellidos() | '' ?>" required>
                             </div>
                         </div>
                     </div>
@@ -137,13 +144,13 @@ if (!isset($_SESSION['sesion'])) {
                         <div class="col">
                             <div class="form-group mt-3">
                                 <label for="email_cliente" class="form-label">Email</label>
-                                <input type="email" class="form-control" name="email_cliente" id="email_cliente" required>
+                                <input type="email" class="form-control" name="email_cliente" id="email_cliente" value="<?php echo $cliente->getCorreo() | '' ?>" required>
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-group mt-3">
                                 <label for="telefono" class="form-label">Teléfono</label>
-                                <input type="text" class="form-control" name="telefono" id="telefono" maxlength="9" required>
+                                <input type="text" class="form-control" name="telefono" id="telefono" value="<?php echo $cliente->getTelefono() | '' ?>" maxlength="9" required>
                             </div>
                         </div>
                     </div>
@@ -152,16 +159,16 @@ if (!isset($_SESSION['sesion'])) {
                             <div class="form-group mt-3">
                                 <label for="tipodoc" class="form-label">Tipo de documento</label>
                                 <select id="tipoDocumento" name="tipoDocumento" class="form-select" required>
-                                    <option value="dni">DNI</option>
-                                    <option value="extranjero">Carnet de Extranjería</option>
-                                    <option value="pasaporte">Pasaporte</option>
+                                    <option value="dni" <?php if ($cliente->getTipo_doc() === "1") echo 'selected' ?>>DNI</option>
+                                    <option value="extranjero" <?php if ($cliente->getTipo_doc() === "2") echo 'selected' ?>>Carnet de Extranjería</option>
+                                    <option value="pasaporte" <?php if ($cliente->getTipo_doc() === "3") echo 'selected' ?>>Pasaporte</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-group mt-3">
                                 <label for="numdoc" class="form-label">Número de documento</label>
-                                <input type="text" class="form-control" name="numdoc" id="numdoc" maxlength="8" required>
+                                <input type="text" class="form-control" name="numdoc" id="numdoc" value="<?php echo $cliente->getNum_doc() | '' ?>" maxlength="8" required>
                             </div>
                         </div>
                     </div>
@@ -173,7 +180,11 @@ if (!isset($_SESSION['sesion'])) {
                                     <option value="">Selecciona un departamento</option>
                                     <?php
                                     foreach ($ubigeo_peru_departments as $department) {
-                                        echo "<option value='{$department['id']}'>{$department['name']}</option>";
+                                        if ($existe && $cliente->getDepartamento() === $department['name']) {
+                                            echo "<option value='{$department['id']}' selected>{$department['name']}</option>";
+                                        } else {
+                                            echo "<option value='{$department['id']}'>{$department['name']}</option>";
+                                        }
                                     }
                                     ?>
                                 </select>
@@ -191,7 +202,8 @@ if (!isset($_SESSION['sesion'])) {
                     <div class="d-grid gap-2">
                         <div class="form-group mt-3">
                             <label for="direccion" class="form-label">Direccion</label>
-                            <input type="text" class="form-control" name="direccion" id="direccion" required>
+                            <input type="text" class="form-control" name="direccion" id="direccion" value="<?php echo $cliente->getDireccion() | '' ?>" required>
+                            <input type="hidden" name="cliente-existe" value="<?php echo $existe ?>">
                         </div>
                     </div>
                     <div class="d-grid gap-2" style="margin-top: 55px;">
@@ -227,65 +239,58 @@ if (!isset($_SESSION['sesion'])) {
                             </div>
                             <div class="form-group mt-4 text-center">
                                 <button type="submit" class="btn mt-4 text-white" style="border-radius: 30px; background-color: rgba(240, 84, 41);">Iniciar sesión</button>
-                                <p class="mt-4"><a href="#" style="color: rgba(240, 84, 41);">Registrarme</a></p>
+                                <p class="mt-4"><a href="#" data-bs-toggle="modal" data-bs-target="#modalRegistro" style="color: rgba(240, 84, 41);">Registrarme</a></p>
                             </div>
                         </form>
-                        <?php
-                        if (isset($_GET['error']) && $_GET['error'] == 'credenciales') {
-                            echo '<p>Credenciales incorrectas</p>';
-                        }
-                        ?>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalRegistro" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Registro</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="../../controlador/cliente/registro.php" method="post">
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="nombre">Nombre:</label>
+                                <input type="text" class="form-control" id="nombre" name="nombre_cliente" required>
+                            </div>
+                            <div class="col">
+                                <label for="apellidos">Apellidos:</label>
+                                <input type="text" class="form-control" id="apellidos" name="apellidos_cliente" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="email">Email:</label>
+                                <input type="email" class="form-control" id="email" name="email_cliente" required>
+                            </div>
+                            <div class="col">
+                                <label for="pass">Contraseña:</label>
+                                <input type="password" class="form-control" id="pass" name="pass_cliente" required>
+                                <input type="hidden" class="form-control" id="prevRoute" name="prev_route" value="tienda.php" required>
+                                <label for="pass2">Vuelve a escribir la contraseña:</label>
+                                <input type="password" class="form-control" id="pass2" name="pass2" required>
+                            </div>
+                        </div>
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn mt-4 text-white" style="border-radius: 30px; background-color: rgba(240, 84, 41);">Registrarme</button>
+                            <p class="mt-4">Ya eres miembro? <a href="#" data-bs-toggle="modal" data-bs-target="#modalInicioSesion" style="color: rgba(240, 84, 41);">Inicia sesión</a></p>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 
     <script src=" https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <script>
-        $(document).ready(function() {
-            $('#departamento').change(function() {
-                var departamentoId = $(this).val();
-
-                if (departamentoId !== '') {
-                    $.ajax({
-                        url: '../../modelo/ubigeo.php',
-                        type: 'GET',
-                        data: {
-                            departamento_id: departamentoId
-                        },
-                        dataType: 'json',
-                        success: function(data) {
-                            $('#provincia').empty().prop('disabled', false);
-
-                            $.each(data, function(index, provincia) {
-                                $('#provincia').append('<option value="' + provincia.id + '">' + provincia.name + '</option>');
-                            });
-                        },
-                        error: function() {
-                            console.log('Error al cargar las provincias');
-                        }
-                    });
-                } else {
-                    $('#provincia').empty().prop('disabled', true);
-                }
-            });
-
-            $('#tipoDocumento').change(function() {
-                var tipoDocumento = $(this).val();
-
-                if (tipoDocumento === 'dni') {
-                    $('#numdoc').attr('maxlength', '8');
-                } else {
-                    $('#numdoc').attr('maxlength', '12');
-                }
-            });
-
-            $("#btnMostrarPopup").click(function() {
-                $("#modalInicioSesion").modal('show');
-            });
-        });
-    </script>
+    <script src="../../../public/assets/js/utils.js"></script>
 </body>
 
 </html>

@@ -5,6 +5,7 @@ session_start();
 
 if (isset($_SESSION['sesion'])) {
     $sesion = $_SESSION['sesion'];
+    header("Location: dashboard.php");
 
     if ($sesion->usuario->getRol() === '3') {
         session_destroy();
@@ -26,40 +27,52 @@ if (isset($_SESSION['sesion'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Andres Espinoza motos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="../../../public/assets/css/admin_login.css">
+    <link rel="stylesheet" href="../../../public/assets/css/admin_dashboard.css">
 </head>
 
-<body>
-    <section id="loginSection" class="vh-100">
-        <div class="container-fluid h-100">
-            <div class="row px-4 h-100 align-items-center">
-                <div class="col-md-4 col-md-auto">
-
-                    <form action="../../../app/controlador/ingresar.php" class="text-center text-white" method="post">
-
-                        <img src="../../../public/assets/img/logo-110x51px-borders.png" alt="Logo 110x51">
-                        <h3 class="mb-5 mt-3">Iniciar sesión</h3>
-
-                        <div class="mb-3 text-start">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" name="email" id="email" required>
+<body style="background: url('../../../public/assets/img/fondo-login-page.png') no-repeat center;
+  background-size: cover;">
+    <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed">
+        <div class="position-relative overflow-hidden radial-gradient min-vh-100 d-flex align-items-center justify-content-center">
+            <div class="d-flex align-items-center justify-content-center w-100">
+                <div class="row justify-content-center w-100">
+                    <div class="col-md-8 col-lg-6 col-xxl-3">
+                        <div class="card mb-0">
+                            <div class="card-body">
+                                <a href="./index.html" class="text-nowrap logo-img text-center d-block py-3 w-100">
+                                    <img src="../../../public/assets/img/logo-110x51px-borders.png" alt="">
+                                </a>
+                                <p class="text-center">Inicia sesión</p>
+                                <form action="../../controlador/ingresar.php" method="post">
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label">Email o nombre de usuario</label>
+                                        <input type="email" class="form-control" id="email" name="email" required>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="password" class="form-label">Contraseña</label>
+                                        <input type="password" class="form-control" id="password" name="pass" required>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-between mb-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                                            <label class="form-check-label text-dark" for="flexCheckChecked">
+                                                Recordarme
+                                            </label>
+                                        </div>
+                                        <a class="text-primary fw-bold" href="#">Olvidé mi contraseña</a>
+                                    </div>
+                                    <input type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2" value="Iniciar sesión">
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        <a class="text-primary fw-bold" href="#">Registrarme</a>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                        <div class="mb-3 text-start">
-                            <label for="pass" class="form-label">Contraseña</label>
-                            <input type="password" class="form-control" name="pass" id="pass" required>
-                        </div>
-                        <div class="mb-3 form-check text-start">
-                            <input type="checkbox" class="form-check-input" id="cbxrecordar" name="cbxrecordar">
-                            <label class="form-check-label" for="cbxrecordar">Recordarme</label>
-                        </div>
-                        <div class="mb-3">
-                            <button type="submit" class="btn btn-primary" style="background-color: rgba(240, 84, 41);">Ingresar</button>
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
     <div class="modal fade" id="usuarioNoExisteModal" tabindex="-1" role="dialog" aria-labelledby="usuarioNoExisteModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">

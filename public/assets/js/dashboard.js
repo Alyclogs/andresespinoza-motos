@@ -1,13 +1,10 @@
+
 $(function () {
 
-
-  // =====================================
-  // Profit
-  // =====================================
   var chart = {
     series: [
-      { name: "Ganancias este mes:", data: [355, 390, 300, 350, 390, 180, 355, 390] },
-      { name: "Ganancias este mes:", data: [280, 250, 325, 215, 250, 310, 280, 250] },
+      { name: "Ganancias este mes", data: [355, 390, 300, 350, 390, 180, 355, 390] },
+      { name: "Ganancias este mes", data: [280, 250, 325, 215, 250, 310, 280, 250] },
     ],
 
     chart: {

@@ -1,5 +1,6 @@
 <?php
 include_once $_SERVER["DOCUMENT_ROOT"] . '/tienda-virtual/app/modelo/usuario.php';
+include_once $_SERVER["DOCUMENT_ROOT"] . '/tienda-virtual/app/modelo/cliente.php';
 include_once $_SERVER["DOCUMENT_ROOT"] . '/tienda-virtual/app/modelo/dao/DataSource.php';
 
 class UsuarioDAO
@@ -16,10 +17,10 @@ class UsuarioDAO
         if (count($data_table) > 0) {
             foreach ($data_table as  $clave) {
                 $usuario = new Usuario();
-                $usuario->setId($data_table[$clave]["id"]);
-                $usuario->setNombre($data_table[$clave]["nombre"]);
-                $usuario->setContrasena($data_table[$clave]["contrasena"]);
-                $usuario->setRol($data_table[$clave]["rol"]);
+                $usuario->setId($$clave["id"]);
+                $usuario->setNombre($$clave["nombre"]);
+                $usuario->setContrasena($$clave["contrasena"]);
+                $usuario->setRol($$clave["rol"]);
                 array_push($arrUsuarios, $usuario);
             }
         }
@@ -32,18 +33,23 @@ class UsuarioDAO
     function agregarUsuario($usuario)
     {
         $this->dao = new DataSource();
-        $sql = 'INSERT INTO usuarios
-        VALUES (null, :nombre, :email, :contrasena, :rol)';
+        $sql = 'INSERT INTO usuarios VALUES (null, :nombre, :email, :contrasena, :rol)';
 
-        return $this->dao->ejecutarActualizacion(
-            $sql,
-            array(
-                ':nombre' => $usuario->getNombre(),
-                ':email' => $usuario->getEmail(),
-                ':contrasena' => $usuario->getContrasena(),
-                ':rol' => $usuario->getRol()
-            )
-        );
+        try {
+            $this->dao->ejecutarActualizacion(
+                $sql,
+                array(
+                    ':nombre' => $usuario->getNombre(),
+                    ':email' => $usuario->getEmail(),
+                    ':contrasena' => $usuario->getContrasena(),
+                    ':rol' => $usuario->getRol()
+                )
+            );
+            return true;
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return false;
+        }
     }
 
     function obtenerUsuarioPorId($usuario_id)
@@ -51,6 +57,27 @@ class UsuarioDAO
         $this->dao = new DataSource();
         $sql = "SELECT * FROM usuarios WHERE id = :id";
         $resultado = $this->dao->ejecutarConsulta($sql, array(':id' => $usuario_id));
+
+        if (!empty($resultado)) {
+            $primerResultado = $resultado[0];
+            $usuario = new Usuario();
+            $usuario->setId($primerResultado['id']);
+            $usuario->setNombre($primerResultado['nombre']);
+            $usuario->setEmail($primerResultado['email']);
+            $usuario->setContrasena($primerResultado['contrasena']);
+            $usuario->setRol($primerResultado['rol']);
+
+            return $usuario;
+        } else {
+            return null;
+        }
+    }
+
+    function obtenerUsuarioPorCorreo($correo)
+    {
+        $this->dao = new DataSource();
+        $sql = "SELECT * FROM usuarios WHERE email = :email";
+        $resultado = $this->dao->ejecutarConsulta($sql, array(':email' => $correo));
 
         if (!empty($resultado)) {
             $primerResultado = $resultado[0];
@@ -97,6 +124,33 @@ class UsuarioDAO
             }
         } catch (PDOException $e) {
             echo "Error al obtener el token de usuario: " . $e->getMessage();
+        }
+    }
+
+    function obtenerClientePorIdUsuario($usuario_id)
+    {
+        $this->dao = new DataSource();
+        $sql = "SELECT * FROM clientes WHERE user_id = :user_id";
+        $resultado = $this->dao->ejecutarConsulta($sql, array(':user_id' => $usuario_id));
+
+        if (!empty($resultado)) {
+            $primerResultado = $resultado[0];
+            $cliente = new Cliente();
+            $cliente->setId($primerResultado["id"]);
+            $cliente->setUser_id($primerResultado["user_id"]);
+            $cliente->setNombre($primerResultado["nombre"]);
+            $cliente->setTipo_doc($primerResultado["tipo_doc"]);
+            $cliente->setNum_doc($primerResultado["num_doc"]);
+            $cliente->setApellidos($primerResultado["apellidos"]);
+            $cliente->setCorreo($primerResultado["correo"]);
+            $cliente->setTelefono($primerResultado["telefono"]);
+            $cliente->setDepartamento($primerResultado["departamento"]);
+            $cliente->setProvincia($primerResultado["provincia"]);
+            $cliente->setDireccion($primerResultado["direccion"]);
+
+            return $cliente;
+        } else {
+            return null;
         }
     }
 

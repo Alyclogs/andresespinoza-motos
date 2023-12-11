@@ -1,0 +1,8 @@
+{
+    "require": {
+        "phpmailer/phpmailer": "^6.9",
+        "fpdf/fpdf": "^1.86",
+        "setasign/fpdf": "^1.8",
+        "luecano/numero-a-letras": "3.0"
+    }
+}

@@ -51,7 +51,7 @@ if (isset($_SESSION['sesion'])) {
                             <span class="hide-menu">Inicio</span>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="./index.html" aria-expanded="false">
+                            <a class="sidebar-link" href="./index.php" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-layout-dashboard"></i>
                                 </span>
@@ -63,15 +63,7 @@ if (isset($_SESSION['sesion'])) {
                             <span class="hide-menu">Admin</span>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="./ventas.php" aria-expanded="false">
-                                <span>
-                                    <i class="ti ti-shopping-cart"></i>
-                                </span>
-                                <span class="hide-menu">Ventas</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="./pedidos.php" aria-expanded="false">
+                            <a class="sidebar-link" href="./sales-system/pedidos.php" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-building-store"></i>
                                 </span>
@@ -79,7 +71,15 @@ if (isset($_SESSION['sesion'])) {
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="./clientes.php" aria-expanded="false">
+                            <a class="sidebar-link" href="./sales-system/ventas.php" aria-expanded="false">
+                                <span>
+                                    <i class="ti ti-shopping-cart"></i>
+                                </span>
+                                <span class="hide-menu">Ventas</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="./sales-system/clientes.php" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-users"></i>
                                 </span>
@@ -87,7 +87,7 @@ if (isset($_SESSION['sesion'])) {
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="./productos.php" aria-expanded="false">
+                            <a class="sidebar-link" href="./sales-system/productos.php" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-archive"></i>
                                 </span>
@@ -162,17 +162,8 @@ if (isset($_SESSION['sesion'])) {
                                     </div>
                                     <div>
                                         <select class="form-select">
-                                            <option value="4">Enero 2023</option>
-                                            <option value="4">Febrero 2023</option>
-                                            <option value="1">Marzo 2023</option>
-                                            <option value="2">Abril 2023</option>
-                                            <option value="3">Mayo 2023</option>
-                                            <option value="4">Junio 2023</option>
-                                            <option value="4">Julio 2023</option>
-                                            <option value="4">Agosto 2023</option>
-                                            <option value="4">Setiembre 2023</option>
-                                            <option value="4">Octubre 2023</option>
-                                            <option value="4">Noviembre 2023</option>
+                                            <option value="11">Noviembre 2023</option>
+                                            <option value="12" selected>Diciembre 2023</option>
                                         </select>
                                     </div>
                                 </div>
