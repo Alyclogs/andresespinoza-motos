@@ -9,11 +9,8 @@
         }
       },
       {
-        "src": "/index.php",
-        "use": "@now/php",
-        "config": {
-          "maxLambdaSize": "1024mb"
-        }
+        "src": "/app/**",
+        "use": "@now/node"
       }
     ],
     "routes": [
