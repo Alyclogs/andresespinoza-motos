@@ -1,3 +1,4 @@
 /app/config.php
 /app/env.php
 /vendor
+/node-modules
