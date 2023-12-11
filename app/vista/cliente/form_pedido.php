@@ -51,7 +51,7 @@ if (!isset($_SESSION['sesion'])) {
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="./inicio.php">Inicio</a>
+                            <a class="nav-link" href="../../../public/index.html">Inicio</a>
                         </li>
                         <li class="nav-item active">
                             <a class="nav-link active" href="./tienda.php">Tienda</a>

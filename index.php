@@ -12,5 +12,5 @@ if (isset($_COOKIE['recuerdame_token'])) {
         //header('Location: app/vista/tienda.php');
     }
 } else {
-    header('Location: app/vista/cliente/inicio.php');
+    header('Location: public/index.html');
 }
