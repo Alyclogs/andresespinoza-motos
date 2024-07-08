@@ -16,6 +16,8 @@ if (isset($_SESSION['sesion'])) {
         header("Location: login.php");
         exit();
     }
+} else {
+    header("Location: ./login.php");
 }
 ?>
 <!DOCTYPE html>
@@ -51,7 +53,7 @@ if (isset($_SESSION['sesion'])) {
                             <span class="hide-menu">Inicio</span>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="./index.php" aria-expanded="false">
+                            <a class="sidebar-link" href="./dashboard.php" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-layout-dashboard"></i>
                                 </span>
@@ -162,8 +164,11 @@ if (isset($_SESSION['sesion'])) {
                                     </div>
                                     <div>
                                         <select class="form-select">
-                                            <option value="11">Noviembre 2023</option>
-                                            <option value="12" selected>Diciembre 2023</option>
+                                            <option value="01">Enero 2024</option>
+                                            <option value="02">Febrero 2024</option>
+                                            <option value="03" selected>Marzo 2024</option>
+                                            <option value="04">Abril 2024</option>
+                                            <option value="05" selected>Mayo 2024</option>
                                         </select>
                                     </div>
                                 </div>
@@ -218,7 +223,7 @@ if (isset($_SESSION['sesion'])) {
                                                     <span class="me-2 rounded-circle bg-light-danger round-20 d-flex align-items-center justify-content-center">
                                                         <i class="ti ti-arrow-down-right text-danger"></i>
                                                     </span>
-                                                    <p class="text-dark me-1 fs-3 mb-0">+9%</p>
+                                                    <p class="text-dark me-1 fs-3 mb-0">-2%</p>
                                                     <p class="fs-3 mb-0">que el año pasado</p>
                                                 </div>
                                             </div>
@@ -411,11 +416,11 @@ if (isset($_SESSION['sesion'])) {
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../../../public/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="../../../public/assets/js/dashboard.js"></script>
     <script src="../../../public/assets/js/sidebarmenu.js"></script>
     <script src="../../../public/assets/js/app.min.js"></script>
     <script src="../../../public/assets/libs/apexcharts/dist/apexcharts.min.js"></script>
     <script src="../../../public/assets/libs/simplebar/dist/simplebar.js"></script>
-    <script src="../../../public/assets/js/dashboard.js"></script>
 
 </body>
 

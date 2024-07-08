@@ -66,6 +66,31 @@ class ClienteDAO
     }
 
     /**
+     * @param Cliente $cliente El Cliente a agregar
+     */
+    function registroCliente($cliente)
+    {
+        $this->dao = new DataSource();
+        $sql = 'INSERT INTO clientes VALUES (null, :user_id, :nombre, :apellidos, :correo)';
+
+        try {
+            $this->dao->ejecutarActualizacion(
+                $sql,
+                array(
+                    ':user_id' => $cliente->getUser_id(),
+                    ':nombre' => $cliente->getNombre(),
+                    ':apellidos' => $cliente->getApellidos(),
+                    ':correo' => $cliente->getCorreo(),
+                )
+            );
+            return true;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
+
+    /**
      * @param Cliente $cliente El Cliente a modifircar
      */
     function modificarCliente($cliente)

@@ -3,8 +3,8 @@ $(function () {
 
   var chart = {
     series: [
-      { name: "Ganancias este mes", data: [355, 390, 300, 350, 390, 180, 355, 390] },
-      { name: "Ganancias este mes", data: [280, 250, 325, 215, 250, 310, 280, 250] },
+      { name: "Ganan bruta", data: [355, 390, 300, 350, 390, 180, 355, 390] },
+      { name: "Ganancias neta", data: [280, 250, 325, 215, 250, 310, 280, 250] },
     ],
 
     chart: {
@@ -54,7 +54,7 @@ $(function () {
 
     xaxis: {
       type: "category",
-      categories: ["27/11", "28/11", "29/11", "30/11", "01/12", "02/12", "03/12", "04/12"],
+      categories: ["30/06", "01/07", "02/07", "03/07", "04/07", "05/07", "06/07", "07/07"],
       labels: {
         style: { cssClass: "grey--text lighten-2--text fill-color" },
       },

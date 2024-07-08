@@ -7,6 +7,7 @@ class Producto
     private $marca;
     private $modelo;
     private $precio;
+    private $stock;
     private $imagen;
     private $tipo;
 
@@ -48,6 +49,16 @@ class Producto
     public function setPrecio($precio)
     {
         $this->precio = $precio;
+    }
+
+    public function getStock()
+    {
+        return $this->stock;
+    }
+
+    public function setStock($stock)
+    {
+        $this->stock = $stock;
     }
 
     public function getImagen()

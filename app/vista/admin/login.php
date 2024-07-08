@@ -43,7 +43,11 @@ if (isset($_SESSION['sesion'])) {
                                     <img src="../../../public/assets/img/logo-110x51px-borders.png" alt="">
                                 </a>
                                 <p class="text-center">Inicia sesión</p>
-                                <form action="../../controlador/ingresar.php" method="post">
+                                <form id="loginForm" action="../../controlador/ingresar.php" method="post">
+                                    <input type="hidden" id="prev_route" name="prev_route" value="admin/login.php">
+                                    <div class="my-2 d-none" id="usuario-no-existe">
+                                        <div class="alert alert-danger">El usuario ingresado no existe</div>
+                                    </div>
                                     <div class="mb-3">
                                         <label for="email" class="form-label">Email o nombre de usuario</label>
                                         <input type="email" class="form-control" id="email" name="email" required>
@@ -62,9 +66,6 @@ if (isset($_SESSION['sesion'])) {
                                         <a class="text-primary fw-bold" href="#">Olvidé mi contraseña</a>
                                     </div>
                                     <input type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2" value="Iniciar sesión">
-                                    <div class="d-flex align-items-center justify-content-center">
-                                        <a class="text-primary fw-bold" href="#">Registrarme</a>
-                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -93,8 +94,9 @@ if (isset($_SESSION['sesion'])) {
         </div>
     </div>
 
-    <script src="../../public/script.js"></script>
+    <script src="../../../public/assets/libs/jquery/dist/jquery.min.js"></script>
     <script src=" https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="../../../public/assets/js/utils.js"></script>
 </body>
 
 </html>

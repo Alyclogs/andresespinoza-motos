@@ -51,7 +51,7 @@ if (isset($_SESSION['sesion'])) {
                             <span class="hide-menu">Inicio</span>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="../index.php" aria-expanded="false">
+                            <a class="sidebar-link" href="../dashboard.php" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-layout-dashboard"></i>
                                 </span>
@@ -166,12 +166,6 @@ if (isset($_SESSION['sesion'])) {
                         <div class="d-flex bd-highlight p-2 my-2 align-items-center">
                             <div class="me-auto bd-highlight">
                                 <h5 class="card-title fw-semibold">Lista de ventas</h5>
-                            </div>
-                            <div class="bd-highlight">
-                                <select class="form-select">
-                                    <option value="11">Noviembre 2023</option>
-                                    <option value="12" selected>Diciembre 2023</option>
-                                </select>
                             </div>
                         </div>
                         <div class="d-flex bd-highlight">

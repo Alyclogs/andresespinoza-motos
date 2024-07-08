@@ -37,8 +37,6 @@ if (isset($_SESSION['sesion'])) {
         $pedido->setFecha($fechaActual);
         $pedido->setEstado('Pendiente');
         $dao->agregarPedido($pedido);
-
-        echo var_dump($pedido);
     } catch (Exception $e) {
         echo $e->getMessage();
     }

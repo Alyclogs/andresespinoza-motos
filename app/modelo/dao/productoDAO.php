@@ -11,21 +11,22 @@ class ProductoDAO
         $this->dao = new DataSource();
         $sql = "SELECT * FROM productos";
         $data_table = $this->dao->ejecutarConsulta($sql);
-        $arrUsuarios = array();
+        $arrproductos = array();
 
         if (count($data_table) > 0) {
             foreach ($data_table as  $clave) {
-                $usuario = new Producto();
-                $usuario->setId($data_table[$clave]["id"]);
-                $usuario->setMarca($data_table[$clave]["nombre"]);
-                $usuario->setModelo($data_table[$clave]["modelo"]);
-                $usuario->setPrecio($data_table[$clave]["precio"]);
-                $usuario->setImagen($data_table[$clave]["imagen"]);
-                $usuario->setTipo($data_table[$clave]["tipo"]);
-                array_push($arrUsuarios, $usuario);
+                $producto = new Producto();
+                $producto->setId($clave["id"]);
+                $producto->setMarca($clave["marca"]);
+                $producto->setModelo($clave["modelo"]);
+                $producto->setPrecio($clave["precio"]);
+                $producto->setStock($clave["stock"]);
+                $producto->setImagen($clave["imagen"]);
+                $producto->setTipo($clave["tipo"]);
+                array_push($arrproductos, $producto);
             }
         }
-        return $arrUsuarios;
+        return $arrproductos;
     }
 
     /**
@@ -45,6 +46,7 @@ class ProductoDAO
                     ':marca' => $producto->getMarca(),
                     ':modelo' => $producto->getModelo(),
                     ':precio' => $producto->getPrecio(),
+                    ':stock' => $producto->getStock(),
                     ':imagen' => $producto->getImagen()
                 )
             );
@@ -71,6 +73,7 @@ class ProductoDAO
                 $producto->setMarca($resultado[0]['marca']);
                 $producto->setModelo($resultado[0]['modelo']);
                 $producto->setPrecio($resultado[0]['precio']);
+                $producto->setStock($resultado[0]['stock']);
                 $producto->setImagen($resultado[0]['imagen']);
                 $producto->setTipo($resultado[0]['tipo']);
             }

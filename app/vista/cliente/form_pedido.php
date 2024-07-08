@@ -12,9 +12,7 @@ $dao = new ProductoDAO();
 $udao = new UsuarioDAO();
 $moto = $dao->obtenerProductoPorId($id);
 
-if (!isset($_SESSION['sesion'])) {
-    header("Location: tienda.php");
-} else {
+if (isset($_SESSION['sesion'])) {
     $sesion = $_SESSION['sesion'];
 
     if (isset($_GET['logout'])) {
@@ -57,7 +55,7 @@ if (!isset($_SESSION['sesion'])) {
                             <a class="nav-link active" href="./tienda.php">Tienda</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Contacto</a>
+                            <a class="nav-link" href="./contacto.php">Contacto</a>
                         </li>
                     </ul>
                     <?php
@@ -119,10 +117,15 @@ if (!isset($_SESSION['sesion'])) {
                 <form action="../../controlador/cliente/confirmacion_pedido.php" method="post">
                     <h5>Ingresa tus datos:</h5>
                     <?php
-                    $cliente = $udao->obtenerClientePorIdUsuario($sesion->usuario->getId());
+                    $cliente = null;
                     $existe = false;
 
-                    if ($cliente != null) $existe = true;
+                    if (isset($_SESSION['sesion'])) {
+                        $sesion = $_SESSION['sesion'];
+                        $cliente = $udao->obtenerClientePorIdUsuario($sesion->usuario->getId());
+
+                        if ($cliente != null) $existe = true;
+                    }
                     ?>
                     <input type="hidden" name="nomProducto" value="<?php echo $moto->getMarca() . ' ' . $moto->getModelo() ?>">
                     <input type="hidden" name="producto_id" value="<?php echo $moto->getId() ?>">
@@ -130,13 +133,13 @@ if (!isset($_SESSION['sesion'])) {
                         <div class="col">
                             <div class="form-group mt-3">
                                 <label for="nombre_cliente" class="form-label">Nombres</label>
-                                <input type="text" class="form-control" name="nombre_cliente" id="nombre_cliente" value="<?php echo $cliente->getNombre() | '' ?>" required>
+                                <input type="text" class="form-control" name="nombre_cliente" id="nombre_cliente" value="<?php echo $existe ? $cliente->getNombre() : ''; ?>" required>
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-group mt-3">
                                 <label for="apellidos" class="form-label">Apellidos</label>
-                                <input type="text" class="form-control" name="apellidos" id="apellidos" value="<?php echo $cliente->getApellidos() | '' ?>" required>
+                                <input type="text" class="form-control" name="apellidos" id="apellidos" value="<?php echo $existe ? $cliente->getApellidos() : ''; ?>" required>
                             </div>
                         </div>
                     </div>
@@ -144,13 +147,13 @@ if (!isset($_SESSION['sesion'])) {
                         <div class="col">
                             <div class="form-group mt-3">
                                 <label for="email_cliente" class="form-label">Email</label>
-                                <input type="email" class="form-control" name="email_cliente" id="email_cliente" value="<?php echo $cliente->getCorreo() | '' ?>" required>
+                                <input type="email" class="form-control" name="email_cliente" id="email_cliente" value="<?php echo $existe ? $cliente->getCorreo() : ''; ?>" required>
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-group mt-3">
                                 <label for="telefono" class="form-label">Teléfono</label>
-                                <input type="text" class="form-control" name="telefono" id="telefono" value="<?php echo $cliente->getTelefono() | '' ?>" maxlength="9" required>
+                                <input type="text" class="form-control" name="telefono" id="telefono" value="<?php echo $existe ? $cliente->getTelefono() : ''; ?>" maxlength="9" required>
                             </div>
                         </div>
                     </div>
@@ -159,16 +162,16 @@ if (!isset($_SESSION['sesion'])) {
                             <div class="form-group mt-3">
                                 <label for="tipodoc" class="form-label">Tipo de documento</label>
                                 <select id="tipoDocumento" name="tipoDocumento" class="form-select" required>
-                                    <option value="dni" <?php if ($cliente->getTipo_doc() === "1") echo 'selected' ?>>DNI</option>
-                                    <option value="extranjero" <?php if ($cliente->getTipo_doc() === "2") echo 'selected' ?>>Carnet de Extranjería</option>
-                                    <option value="pasaporte" <?php if ($cliente->getTipo_doc() === "3") echo 'selected' ?>>Pasaporte</option>
+                                    <option value="dni" <?php if ($existe && $cliente->getTipo_doc() === "1") echo 'selected' ?>>DNI</option>
+                                    <option value="extranjero" <?php if ($existe && $cliente->getTipo_doc() === "2") echo 'selected' ?>>Carnet de Extranjería</option>
+                                    <option value="pasaporte" <?php if ($existe && $cliente->getTipo_doc() === "3") echo 'selected' ?>>Pasaporte</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-group mt-3">
                                 <label for="numdoc" class="form-label">Número de documento</label>
-                                <input type="text" class="form-control" name="numdoc" id="numdoc" value="<?php echo $cliente->getNum_doc() | '' ?>" maxlength="8" required>
+                                <input type="text" class="form-control" name="numdoc" id="numdoc" value="<?php echo $existe ? $cliente->getNum_doc() : '' ?>" maxlength="8" required>
                             </div>
                         </div>
                     </div>
@@ -202,7 +205,7 @@ if (!isset($_SESSION['sesion'])) {
                     <div class="d-grid gap-2">
                         <div class="form-group mt-3">
                             <label for="direccion" class="form-label">Direccion</label>
-                            <input type="text" class="form-control" name="direccion" id="direccion" value="<?php echo $cliente->getDireccion() | '' ?>" required>
+                            <input type="text" class="form-control" name="direccion" id="direccion" value="<?php echo $existe ? $cliente->getDireccion() : '' ?>" required>
                             <input type="hidden" name="cliente-existe" value="<?php echo $existe ?>">
                         </div>
                     </div>
@@ -290,7 +293,44 @@ if (!isset($_SESSION['sesion'])) {
     </div>
 
     <script src=" https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <script src="../../../public/assets/js/utils.js"></script>
+    <script>
+        $('#departamento').change(function() {
+            var departamentoId = $(this).val();
+
+            if (departamentoId !== '') {
+                $.ajax({
+                    url: '../../modelo/ubigeo.php',
+                    type: 'GET',
+                    data: {
+                        departamento_id: departamentoId
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                        $('#provincia').empty().prop('disabled', false);
+
+                        $.each(data, function(index, provincia) {
+                            $('#provincia').append('<option value="' + provincia.name + '">' + provincia.name + '</option>');
+                        });
+                    },
+                    error: function() {
+                        console.log('Error al cargar las provincias');
+                    }
+                });
+            } else {
+                $('#provincia').empty().prop('disabled', true);
+            }
+        });
+
+        $('#tipoDocumento').change(function() {
+            var tipoDocumento = $(this).val();
+
+            if (tipoDocumento === 'dni') {
+                $('#numdoc').attr('maxlength', '8');
+            } else {
+                $('#numdoc').attr('maxlength', '12');
+            }
+        });
+    </script>
 </body>
 
 </html>

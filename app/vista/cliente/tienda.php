@@ -143,15 +143,18 @@ if (isset($_SESSION['sesion'])) {
                 </div>
                 <div class="modal-body">
                     <div class="modal-container p-3">
-                        <form action="../../controlador/ingresar.php" method="post">
+                        <form action="../../controlador/ingresar.php" id="loginForm" method="post">
+                            <div class="my-2 d-none" id="usuario-no-existe">
+                                <div class="alert alert-danger">El usuario ingresado no existe</div>
+                            </div>
                             <div class="form-group">
                                 <label for="email">Email:</label>
                                 <input type="text" class="form-control" id="email" name="email" required>
                             </div>
                             <div class="form-group mt-4">
                                 <label for="pass">Contraseña:</label>
-                                <input type="password" class="form-control" id="pass" name="pass" required>
-                                <input type="hidden" class="form-control" id="prevRoute" name="prev_route" value="tienda.php" required>
+                                <input type="password" class="form-control" id="password" name="pass" required>
+                                <input type="hidden" class="form-control" id="prev_route" name="prev_route" value="tienda.php" required>
                             </div>
                             <div class="form-group mt-2">
                                 <input type="checkbox" class="form-check-input" id="cbxrecordar" name="cbxrecordar">
@@ -194,7 +197,7 @@ if (isset($_SESSION['sesion'])) {
                             <div class="col">
                                 <label for="pass">Contraseña:</label>
                                 <input type="password" class="form-control" id="pass" name="pass_cliente" required>
-                                <input type="hidden" class="form-control" id="prevRoute" name="prev_route" value="tienda.php" required>
+                                <input type="hidden" class="form-control" id="prev_route" name="prev_route" value="cliente/tienda.php" required>
                                 <label for="pass2">Vuelve a escribir la contraseña:</label>
                                 <input type="password" class="form-control" id="pass2" name="pass2" required>
                             </div>
@@ -215,7 +218,9 @@ if (isset($_SESSION['sesion'])) {
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="../../../public/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="../../../public/assets/js/app.min.js"></script>
     <script src="../../../public/assets/js/utils.js"></script>
+
 </body>
 
 </html>

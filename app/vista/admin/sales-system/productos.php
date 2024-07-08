@@ -25,7 +25,7 @@ if (isset($_SESSION['sesion'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Sistema de clientes | Inicio</title>
+    <title>Sistema de ventas | Inicio</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.png" />
     <link rel="stylesheet" href="../../../../public/assets/css/admin_dashboard.css">
@@ -52,7 +52,7 @@ if (isset($_SESSION['sesion'])) {
                             <span class="hide-menu">Inicio</span>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="../index.php" aria-expanded="false">
+                            <a class="sidebar-link" href="../dashboard.php" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-layout-dashboard"></i>
                                 </span>
@@ -160,19 +160,13 @@ if (isset($_SESSION['sesion'])) {
                 include_once '../../../modelo/dao/productoDAO.php';
 
                 $dao = new productoDAO();
-                $clientes = $dao->leerProductos();
+                $productos = $dao->leerProductos();
                 ?>
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex bd-highlight p-2 my-2 align-items-center">
                             <div class="me-auto bd-highlight">
                                 <h5 class="card-title fw-semibold">Lista de Productos</h5>
-                            </div>
-                            <div class="bd-highlight">
-                                <select class="form-select">
-                                    <option value="11">Noviembre 2023</option>
-                                    <option value="12" selected>Diciembre 2023</option>
-                                </select>
                             </div>
                         </div>
                         <div class="d-flex bd-highlight">
@@ -184,12 +178,15 @@ if (isset($_SESSION['sesion'])) {
                                 </select>
                             </div>
                             <div class="p-2 bd-highlight">
+                                <a href="#" class="btn btn-success" id="btn-mostrar-popup"><i class="ti ti-plus me-2"></i>Nueva</a>
+                            </div>
+                            <div class="p-2 bd-highlight">
                                 <a href="./clientes.php" class="btn btn-warning"><i class="ti ti-refresh"></i></a>
                             </div>
                         </div>
                         <?php
 
-                        if (count($clientes) == 0) {
+                        if (count($productos) == 0) {
                             echo '<p class="text-center" style="margin-top:50px; margin-bottom:50px">Todavía no hay clientes registrados</p>';
                         } else {
                         ?>
@@ -201,76 +198,39 @@ if (isset($_SESSION['sesion'])) {
                                                 <h6 class="fw-semibold mb-0">Id</h6>
                                             </th>
                                             <th class="border-bottom-0">
-                                                <h6 class="fw-semibold mb-0">User Id</h6>
+                                                <h6 class="fw-semibold mb-0">Modelo</h6>
                                             </th>
                                             <th class="border-bottom-0">
-                                                <h6 class="fw-semibold mb-0">Nombre</h6>
+                                                <h6 class="fw-semibold mb-0">Marca</h6>
                                             </th>
                                             <th class="border-bottom-0">
-                                                <h6 class="fw-semibold mb-0">Apellidos</h6>
+                                                <h6 class="fw-semibold mb-0">Precio</h6>
                                             </th>
                                             <th class="border-bottom-0">
-                                                <h6 class="fw-semibold mb-0">Tipo doc</h6>
-                                            </th>
-                                            <th class="border-bottom-0">
-                                                <h6 class="fw-semibold mb-0">Num doc</h6>
-                                            </th>
-                                            <th class="border-bottom-0">
-                                                <h6 class="fw-semibold mb-0">Correo</h6>
-                                            </th>
-                                            <th class="border-bottom-0">
-                                                <h6 class="fw-semibold mb-0">Telefono</h6>
-                                            </th>
-                                            <th class="border-bottom-0">
-                                                <h6 class="fw-semibold mb-0">Departamento</h6>
-                                            </th>
-                                            <th class="border-bottom-0">
-                                                <h6 class="fw-semibold mb-0">Provincia</h6>
-                                            </th>
-                                            <th class="border-bottom-0">
-                                                <h6 class="fw-semibold mb-0">Direccion</h6>
+                                                <h6 class="fw-semibold mb-0">Stock</h6>
                                             </th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
-                                        foreach ($clientes as $cliente) {
+                                        foreach ($productos as $producto) {
                                         ?>
-                                            <tr data-bs-toggle="modal" data-bs-target="#modalCliente" style="cursor:pointer;">
+                                            <tr data-bs-toggle="modal" data-bs-target="#modalDatosProducto" style="cursor:pointer;">
                                                 <td class="border-bottom-0">
-                                                    <p class="mb-0 fw-semibold"><?php echo $cliente->getId() ?></p>
+                                                    <p class="mb-0 fw-semibold"><?php echo $producto->getId() ?></p>
                                                 </td>
                                                 <td class="border-bottom-0">
-                                                    <p class="mb-0 fw-normal"><?php echo $cliente->getUser_id() ?></p>
+                                                    <p class="mb-0 fw-normal"><?php echo $producto->getMarca() ?></p>
                                                 </td>
                                                 <td class="border-bottom-0">
-                                                    <p class="mb-0 fw-normal"><?php echo $cliente->getNombre() ?></p>
+                                                    <p class="mb-0 fw-normal"><?php echo $producto->getModelo() ?></p>
                                                 </td>
                                                 <td class="border-bottom-0">
-                                                    <p class="mb-0 fw-normal"><?php echo $cliente->getApellidos() ?></p>
+                                                    <p class="mb-0 fw-normal"><?php echo number_format($producto->getPrecio(), 2) ?></p>
                                                 </td>
                                                 <td class="border-bottom-0">
-                                                    <p class="mb-0 fw-normal"><?php echo $cliente->getTipo_doc() ?></p>
+                                                    <p class="mb-0 fw-normal"><?php echo $producto->getStock() ?></p>
                                                 </td>
-                                                <td class="border-bottom-0">
-                                                    <p class="mb-0 fw-normal"><?php echo $cliente->getNum_doc() ?></p>
-                                                </td>
-                                                <td class="border-bottom-0">
-                                                    <p class="mb-0 fw-normal"><?php echo $cliente->getCorreo() ?></p>
-                                                </td>
-                                                <td class="border-bottom-0">
-                                                    <p class="mb-0 fw-normal"><?php echo $cliente->getTelefono() ?></p>
-                                                </td>
-                                                <td class="border-bottom-0">
-                                                    <p class="mb-0 fw-normal"><?php echo $cliente->getDepartamento() ?></p>
-                                                </td>
-                                                <td class="border-bottom-0">
-                                                    <p class="mb-0 fw-normal"><?php echo $cliente->getProvincia() ?></p>
-                                                </td>
-                                                <td class="border-bottom-0">
-                                                    <p class="mb-0 fw-normal"><?php echo $cliente->getDireccion() ?></p>
-                                                </td>
-
                                             </tr>
                                     <?php
                                         }

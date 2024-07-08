@@ -1,15 +1,19 @@
 <?php
-include_once '../app/modelo/dao/usuarioDAO.php';
+include_once '../../modelo/Sesion.php';
+include_once '../../modelo/usuario.php';
+session_start();
 
-if (isset($_COOKIE['recuerdame_token'])) {
+if (isset($_SESSION['sesion'])) {
+    $sesion = $_SESSION['sesion'];
 
-    $dao = new UsuarioDAO();
-    $token = $_COOKIE['recuerdame_token'];
-    $usuario_id = $dao->obtenerIdUsuarioPorToken($token);
-
-    if ($usuario_id) {
-        //header('Location: app/vista/tienda.php');
+    if ($sesion->usuario->getRol() === '3') {
+        session_destroy();
+        header("Location: login.php");
     }
-} else {
-    header('Location: dashboard.php');
+    if (isset($_GET['logout'])) {
+        $sesion->cerrarSesion($sesion->usuario->getId());
+        session_destroy();
+        header("Location: login.php");
+        exit();
+    }
 }

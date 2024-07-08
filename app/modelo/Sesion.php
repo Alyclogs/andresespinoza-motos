@@ -1,4 +1,5 @@
 <?php
+ob_start();
 include_once $_SERVER["DOCUMENT_ROOT"] . '/tienda-virtual/app/modelo/usuario.php';
 include_once $_SERVER["DOCUMENT_ROOT"] . '/tienda-virtual/app/modelo/dao/usuarioDAO.php';
 
@@ -34,7 +35,7 @@ class Sesion
             if ($this->usuario->getRol() === "1") {
                 header('Location: ../vista/admin/dashboard.php');
             } else {
-                header('Location: ../vista/cliente/' . $this->prevRoute);
+                header("Location: ../vista/cliente/$this->prevRoute");
             }
         } catch (PDOException $e) {
             echo 'Error en la validacion de datos: ' . $e;
@@ -70,3 +71,4 @@ class Sesion
         }
     }
 }
+ob_end_flush();

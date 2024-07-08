@@ -8,8 +8,8 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
     $nombreCliente = $_POST["nombre_cliente"];
     $apellidosCliente = $_POST["apellidos_cliente"];
-    $email = $_POST["email_cliente"];
-    $pass = $_POST["pass_cliente"];
+    $email = trim($_POST["email_cliente"]);
+    $pass = trim($_POST["pass_cliente"]);
     $prev_route = $_POST["prev_route"];
 
     $dao = new ClienteDAO();
@@ -32,5 +32,5 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     $cliente->setCorreo($email);
 
     $dao->agregarCliente($cliente);
-    //header('Location: ../../vista/cliente/' . $prevroute);
+    header('Location: ../../vista/cliente/' . $prevroute);
 }

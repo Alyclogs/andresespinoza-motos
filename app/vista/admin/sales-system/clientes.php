@@ -25,7 +25,7 @@ if (isset($_SESSION['sesion'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Sistema de clientes | Inicio</title>
+    <title>Sistema de ventas | Inicio</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.png" />
     <link rel="stylesheet" href="../../../../public/assets/css/admin_dashboard.css">
@@ -52,7 +52,7 @@ if (isset($_SESSION['sesion'])) {
                             <span class="hide-menu">Inicio</span>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="../index.php" aria-expanded="false">
+                            <a class="sidebar-link" href="../dashboard.php" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-layout-dashboard"></i>
                                 </span>
@@ -167,12 +167,6 @@ if (isset($_SESSION['sesion'])) {
                         <div class="d-flex bd-highlight p-2 my-2 align-items-center">
                             <div class="me-auto bd-highlight">
                                 <h5 class="card-title fw-semibold">Lista de Clientes</h5>
-                            </div>
-                            <div class="bd-highlight">
-                                <select class="form-select">
-                                    <option value="11">Noviembre 2023</option>
-                                    <option value="12" selected>Diciembre 2023</option>
-                                </select>
                             </div>
                         </div>
                         <div class="d-flex bd-highlight">
